@@ -1,36 +1,40 @@
 class Triangle
-  attr_accessor :side1, :side2, :side3, :kind
+  def initialize(s1, s2, s3)
 
-    def initialize(side1, side2, side3)
-     @side1 = side1
-     @side2 = side2
-     @side3 = side3
-   end
 
-    def kind
-     error
-     if side1 == side2 && side1 == side3
-       self.kind = :equilateral
+    if s1 >= (s2 + s3) || s2 >= (s1 + s3) || s3 >= (s1 + s2)
+      raise TriangleError
+    end
 
-      elsif side1 == side2 || side1 == side3 || side2 == side3
-       self.kind = :isosceles
+    if s1 <= 0 || s2 <= 0 ||s3 <= 0
+      raise TriangleError
+    end
 
-      else
-       self.kind = :scalene
-       end
-     end
-   end
+    if s1 == nil || s2 == nil ||s3 == nil
+      raise TriangleError
+    end
 
-    def error
-     if side1 == 0 || side2 == 0 || side3 == 0
-       raise TriangleError
-     elsif (side1 + side2) <= side3 || (side1 + side3) <= side2 || (side2 + side3) <= side1
-       raise TriangleError
-     end
-   end
-
-    class TriangleError < StandardError
-      def message
-         "This is not a valid triangle."
-       end
+    @s1 = s1
+    @s2 = s2
+    @s3 = s3
   end
+
+  def kind
+    if @s1 == @s2 && @s1 == @s3
+      return :equilateral
+    elsif @s1 == @s2 || @s2 == @s3 || @s3 == @s1
+      return :isosceles
+    else
+      return :scalene
+    end
+  end
+
+end
+
+
+
+class TriangleError < StandardError
+  def message
+    "This is not a valid triangle."
+  end
+end
